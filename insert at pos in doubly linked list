@@ -1,0 +1,60 @@
+class Node {
+    int data;
+    Node next;
+    Node prev;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+        this.prev = null;
+    }
+}
+class DoublyLinkedList {
+    Node head;
+    public void insertAtPosition(int data, int position) {
+        Node newNode = new Node(data);
+
+        if (position == 1) {
+            newNode.next = head;
+            if (head != null) {
+                head.prev = newNode;
+            }
+            head = newNode;
+            return;
+        }
+
+        Node temp = head;
+        for (int i = 1; temp != null && i < position - 1; i++) {
+            temp = temp.next;
+        }
+
+        if (temp == null) {
+            System.out.println("Position invalid");
+            return;
+        }
+
+        newNode.next = temp.next;
+        if (temp.next != null) {
+            temp.next.prev = newNode;
+        }
+        temp.next = newNode;
+        newNode.prev = temp;
+    }
+    public void printList() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        DoublyLinkedList dll = new DoublyLinkedList();
+        dll.insertAtPosition(10, 1);
+        dll.insertAtPosition(20, 2);
+        dll.insertAtPosition(30, 3);
+        dll.insertAtPosition(15, 2);
+        dll.printList(); 
+    }
+}
